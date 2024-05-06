@@ -14,7 +14,7 @@ const EventPopup = ({ event, onClose }) => (
   <Dialog onClose={onClose} open={event !== null}>
     <DialogTitle>Event Details</DialogTitle>
     <DialogContent>
-      <h3>{event ? new Date(event.time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) : ""}</h3>
+      <h3>{event?.time}</h3>
       <p>{event?.description}</p>
     </DialogContent>
     <DialogActions>
