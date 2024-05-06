@@ -1,17 +1,43 @@
-// Events.jsx
+import React, { useState, useEffect } from 'react';
+import NavBar from '../components/navBar';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import Gallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import supabase from '../utils/supabase';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-import React, { useState, useEffect } from "react";
-import NavBar from "../components/navBar";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import Gallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import { supabase } from "../utils/supabase";
+const EventDot = () => <div style={{ backgroundColor: 'blue', width: '5px', height: '5px', borderRadius: '50%', position: 'relative', left: '40%' }} />;
 
-export default function Events() {
+
+const EventPopup = ({ event, onClose }) => (
+  <Dialog onClose={onClose} open={event !== null}>
+    <DialogTitle>Event Details</DialogTitle>
+    <DialogContent>
+      <h3>{event ? new Date(event.time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) : ""}</h3>
+      <p>{event?.description}</p>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onClose} color="primary">Close</Button>
+    </DialogActions>
+  </Dialog>
+);
+
+
+const Events = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [events, setEvents] = useState([]);
-  const [eventDetails, setEventDetails] = useState(null); // Changed initial state to null
+  const [eventsByDate, setEventsByDate] = useState({});
+  const [eventDetails, setEventDetails] = useState(null);
+
+  const pastEventsImages = [
+    {
+      original: 'event1.jpg',
+    },
+    {
+      original: 'event2.1.jpg',
+    },
+  ]; // Define pastEventsImages here
 
   useEffect(() => {
     fetchEvents();
@@ -19,90 +45,71 @@ export default function Events() {
 
   const fetchEvents = async () => {
     try {
-      const { data, error } = await supabase.from("events").select("*");
+      const { data, error } = await supabase
+        .from('events')
+        .select('*');
       if (error) {
         throw error;
       }
       setEvents(data);
+      const eventsByDateObj = {};
+      data.forEach((event) => {
+        const dateStr = event.date.split('T')[0]; // Assuming 'date' is a string in format 'YYYY-MM-DD'
+        if (!eventsByDateObj[dateStr]) {
+          eventsByDateObj[dateStr] = [];
+        }
+        eventsByDateObj[dateStr].push(event);
+      });
+      setEventsByDate(eventsByDateObj);
     } catch (error) {
-      console.error("Error fetching events:", error.message);
+      console.error('Error fetching events:', error.message);
     }
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    const filteredEvents = events.filter((event) => {
-      const eventDate = new Date(event.date);
-      return (
-        eventDate.getDate() === date.getDate() &&
-        eventDate.getMonth() === date.getMonth() &&
-        eventDate.getFullYear() === date.getFullYear()
-      );
-    });
-    setEventDetails(filteredEvents);
+    const dateStr = date.toISOString().split('T')[0];
+    const event = eventsByDate[dateStr] ? eventsByDate[dateStr][0] : null;
+    setEventDetails(event);
   };
 
   const tileContent = ({ date, view }) => {
-    const eventForDate = events.find((event) => {
-      const eventDate = new Date(event.date);
-      return (
-        eventDate.getDate() === date.getDate() &&
-        eventDate.getMonth() === date.getMonth() &&
-        eventDate.getFullYear() === date.getFullYear()
-      );
-    });
-
-    return eventForDate ? <div className="event-dot" /> : null;
+    const dateStr = date.toISOString().split('T')[0];
+    return eventsByDate[dateStr] ? <EventDot /> : null;
   };
 
   const handleEventClick = (event) => {
-    alert(`Event Time: ${event.time}\nDescription: ${event.description}`);
+    setEventDetails(event);
   };
 
-  const pastEventsImages = [
-    {
-      original: "event1.jpg",
-    },
-    {
-      original: "event2.1.jpg",
-    },
-  ];
+  const handleClosePopup = () => {
+    setEventDetails(null);
+  };
 
   return (
     <div className="events-container">
       <NavBar />
       <div className="events-content">
         <section className="calendar-section">
-          <h2 style={{ color: "white", background: "linear-gradient(to right, green, black)", padding: "10px", width: '53%' }}> 
-            Calendar
-          </h2>
+          <h2 style={{ color: "white", background: "linear-gradient(to right, green, black)", padding: "10px", width: '53%' }}>Calendar</h2>
           <Calendar
             onChange={handleDateChange}
             value={selectedDate}
             tileContent={tileContent}
+            onClickDay={handleDateChange}
           />
         </section>
-        <section className="event-details">
-          <div className="past-events-gallery">
-            <h2 style={{ color: "white", background: "linear-gradient(to right, green, black)", padding: "10px", width: '45%' }}>Past Events</h2>
-            {eventDetails && eventDetails.length > 0 && (
-              <div>
-                {eventDetails.map((event) => (
-                  <div
-                    key={event.id}
-                    className="event-item"
-                    onClick={() => handleEventClick(event)}
-                  >
-                    <h3>{event.time}</h3>
-                    <p>{event.description}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            <Gallery items={pastEventsImages} />
-          </div>
+
+        <section className="event-popup">
+          <EventPopup event={eventDetails} onClose={handleClosePopup} />
+        </section>
+        <section className="past-events-gallary">
+          <h2 style={{ color: "white", background: "linear-gradient(to right, green, black)", padding: "10px", width: '53%' }}>Past Events</h2>
+          <Gallery items={pastEventsImages} />
         </section>
       </div>
     </div>
   );
-}
+};
+
+export default Events;

@@ -68,9 +68,11 @@ body {
   color: #ccc;
 }
 
-.past-events-gallery
+.past-events-gallary
 {
-  color: black;
+    flex: 1;
+    margin-right: 10px;
+    color: white;
 
 }
 
@@ -84,6 +86,8 @@ button:hover {
   color: blue;
   font-size: 18px;
 }
+
+/*contact */
 
 
 .header {
@@ -170,11 +174,46 @@ button:hover {
   background-color: #39b300;
 }
 
+/* Dialog styles */
+.MuiDialog-paper {
+  background-color: #fff; 
+}
+
+/* DialogContent styles */
+.MuiDialogContent-root {
+  padding: 20px; 
+}
+
+/* Success message styles */
+.success-message {
+  text-align: center; 
+  font-size: 18px; 
+  color: #333; 
+}
+
+/* Close button styles */
+.close-button {
+  margin-top: 20px; 
+  text-align: center; 
+}
+
+.close-button button {
+  background-color: #15b400; 
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+}
+
+.close-button button:hover {
+  background-color: #00c92b; 
+}
+
 
 .reservation-page {
   display: flex;
   flex-direction: column;
-  /* background-image: url('/reservation.jpg'); Add background image */
   background-size: cover; 
   background-position: center; 
    background-repeat: no-repeat;  
@@ -185,14 +224,14 @@ button:hover {
 }
 
 .reservation-container {
-  background-color: #f9f9f9; /* Light background color */
-  padding: 20px; /* Add some padding */
-  border-radius: 10px; /* Add rounded corners */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
-  max-width: 400px; /* Limit width for better readability */
-  margin: 0 auto; /* Center the container */
-  overflow-y: auto; /* Enable scrolling if content overflows vertically */
-  height: 400px; /* Set a fixed height for scrolling */
+  background-color: #f9f9f9; 
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  max-width: 400px; 
+  margin: 0 auto; 
+  overflow-y: auto; 
+  height: 400px; 
   margin-top: 10%;
 }
 

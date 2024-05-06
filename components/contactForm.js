@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Dialog, DialogContent, Button } from '@mui/material';
 import supabase from '../utils/supabase';
 
 const ContactForm = () => {
@@ -7,6 +8,7 @@ const ContactForm = () => {
     email: '',
     message: '',
   });
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,7 +35,7 @@ const ContactForm = () => {
       } else {
         console.log('Form response stored in Supabase:', data);
         // Display success message and clear the form
-        alert('Message submitted successfully!');
+        setSubmitSuccess(true);
         setFormData({
           name: '',
           email: '',
@@ -45,50 +47,66 @@ const ContactForm = () => {
     }
   };
 
+  const handleClose = () => {
+    setSubmitSuccess(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="contact-form">
-      <div className="input-group">
-        <div className="input-item">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+    <div>
+      <form onSubmit={handleSubmit} className="contact-form">
+        <div className="input-group">
+          <div className="input-item">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-        <div className="input-item">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
+
+        <div className="message-input">
+          <label htmlFor="message">Message:</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Your Message"
+            value={formData.message}
             onChange={handleChange}
+            rows="4"
             required
-          />
+          ></textarea>
         </div>
-      </div>
 
-      <div className="message-input">
-        <label htmlFor="message">Message:</label>
-        <textarea
-          id="message"
-          name="message"
-          placeholder="Your Message"
-          value={formData.message}
-          onChange={handleChange}
-          rows="4"
-          required
-        ></textarea>
-      </div>
+        <button type="submit">Submit</button>
+      </form>
 
-      <button type="submit">Submit</button>
-    </form>
+      <Dialog open={submitSuccess} onClose={handleClose}>
+      <DialogContent className="success-message">
+        <p>Message submitted successfully!</p>
+        <div className="close-button">
+          <button onClick={handleClose}>Close</button>
+        </div>
+      </DialogContent>
+    </Dialog>
+
+    </div>
   );
 };
 

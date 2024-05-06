@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavBar from "../components/navBar";
 import supabase from '../utils/supabase';
+import { Dialog, DialogContent, Button } from '@mui/material';
 
 export default function Reservation() {
   const [formData, setFormData] = useState({
@@ -11,9 +12,14 @@ export default function Reservation() {
     guests: 1,
   });
   const [error, setError] = useState('');
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleClose = () => {
+    setSubmitSuccess(false);
   };
 
   const handleSubmit = async (event) => {
@@ -69,7 +75,7 @@ export default function Reservation() {
       } else {
         console.log('Form response stored in Supabase:', data);
         // Display success message and clear the form
-        alert('Reservation submitted successfully!');
+        setSubmitSuccess(true);
         setFormData({
           name: '',
           email: '',
@@ -82,7 +88,6 @@ export default function Reservation() {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="reservation-page" style={{backgroundImage: `url('/reservation.jpg')`}}>
@@ -90,7 +95,7 @@ export default function Reservation() {
       <div className="reservation-container">
         <div className="reservation-form">
           <h2>Make a Reservation</h2>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
@@ -111,6 +116,17 @@ export default function Reservation() {
           </form>
         </div>
       </div>
+
+      {submitSuccess && (
+        <Dialog open={submitSuccess} onClose={handleClose}>
+          <DialogContent className="success-message">
+            <p>Reservation submitted successfully!</p>
+            <div className="close-button">
+              <button onClick={handleClose}>Close</button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
