@@ -23,7 +23,7 @@ export default function Reservation() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevents the default form submission behavior
+    event.preventDefault(); 
   
     // Check if the selected date and time are within restaurant opening hours
     const selectedDate = new Date(formData.date + 'T' + formData.time);
@@ -47,7 +47,6 @@ export default function Reservation() {
   
       if (existingError) {
         console.error('Error checking existing reservations:', existingError);
-        // Handle the error, show an error message, etc.
         return;
       }
   
@@ -71,10 +70,8 @@ export default function Reservation() {
   
       if (error) {
         console.error('Error storing form response in Supabase:', error);
-        // Handle the error, show an error message, etc.
       } else {
         console.log('Form response stored in Supabase:', data);
-        // Display success message and clear the form
         setSubmitSuccess(true);
         setFormData({
           name: '',

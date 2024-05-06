@@ -37,7 +37,7 @@ const Events = () => {
     {
       original: 'event2.1.jpg',
     },
-  ]; // Define pastEventsImages here
+  ]; 
 
   useEffect(() => {
     fetchEvents();
@@ -54,7 +54,7 @@ const Events = () => {
       setEvents(data);
       const eventsByDateObj = {};
       data.forEach((event) => {
-        const dateStr = event.date.split('T')[0]; // Assuming 'date' is a string in format 'YYYY-MM-DD'
+        const dateStr = event.date.split('T')[0]; 
         if (!eventsByDateObj[dateStr]) {
           eventsByDateObj[dateStr] = [];
         }

@@ -1,5 +1,4 @@
 
-
 @font-face {
   font-family: 'MyCustomCursiveFont';
   src: url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap') format('woff2');
@@ -253,23 +252,23 @@ button:hover {
 }
 
 .reservation-form label {
-  margin-bottom: 10px; /* Add space between labels */
+  margin-bottom: 10px; 
 }
 
 .reservation-form input,
 .reservation-form button {
-  margin-bottom: 20px; /* Add space between inputs and button */
+  margin-bottom: 20px; 
 }
 
 .reservation-form button {
-  background-color: #007bff; /* Blue button color */
-  color: #fff; /* White text color */
-  border: none; /* Remove border */
-  padding: 10px 20px; /* Add padding */
-  border-radius: 5px; /* Add rounded corners */
-  cursor: pointer; /* Add pointer cursor on hover */
+  background-color: #007bff; 
+  color: #fff; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  cursor: pointer; 
 }
 
 .reservation-form button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3; 
 }

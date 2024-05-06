@@ -34,7 +34,6 @@ const Menu = () => {
             price: "$6.99",
             image: "/mannish.jpeg",
           },
-          // Add more appetizer dishes as needed
         ],
     },        
     {
@@ -68,7 +67,7 @@ const Menu = () => {
       ],
     },
     {
-        category: "Sides", // Retained "Sides" category
+        category: "Sides", 
         dishes: [
           {
             name: "Festivals",
@@ -94,7 +93,6 @@ const Menu = () => {
             price: "$2.99",
             image: "/rice and peas.jpeg",
           },
-          // Add more side dishes as needed
         ],
       },   
     {
@@ -125,7 +123,6 @@ const Menu = () => {
             price: "$1.99",
             image: "/ting.jpg",
           },
-        // Add more beverage dishes as needed
       ],
     },
         {

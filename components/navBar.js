@@ -6,8 +6,7 @@ import WorkIcon from '@mui/icons-material/Work';
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Roboto', // Change this to a font that suits your restaurant theme
-      //'serif',
+      'Roboto', 
     ].join(','),
   },
 });
@@ -65,7 +64,7 @@ export default function NavBar() {
                       borderBottom: '10px solid transparent',
                       borderLeft: '10px solid yellow',
                       top: '50%',
-                      left: '25%',  // Adjusted value to bring the arrow closer
+                      left: '25%',  
                       transform: 'translateY(-50%)',
                       transition: 'all 0.3s ease',
                     },
@@ -104,16 +103,13 @@ export default function NavBar() {
                   borderBottom: '10px solid transparent',
                   borderLeft: '10px solid yellow',
                   top: '50%',
-                  left: '25%',  // Adjusted value to bring the arrow closer
+                  right: '100%',  
                   transform: 'translateY(-50%)',
                   transition: 'all 0.3s ease',
                 },
               },
             }}
           >
-            <ListItemIcon>
-              <WorkIcon />
-            </ListItemIcon>
             <Typography variant="inherit">Reservations</Typography>
           </ListItemButton>
         </Link>

@@ -31,10 +31,8 @@ const ContactForm = () => {
 
       if (error) {
         console.error('Error storing form response in Supabase:', error);
-        // Handle the error, show an error message, etc.
       } else {
         console.log('Form response stored in Supabase:', data);
-        // Display success message and clear the form
         setSubmitSuccess(true);
         setFormData({
           name: '',
