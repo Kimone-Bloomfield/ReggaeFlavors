@@ -159,7 +159,7 @@ const Menu = () => {
   ];
 
   const getGradientColor = (index) => {
-    const colors = ["yellow", "green"];
+    const colors = ["yellow", "black"];
     const colorIndex = index % colors.length;
     return colors[colorIndex];
   };
