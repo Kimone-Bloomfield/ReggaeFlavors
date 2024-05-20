@@ -37,7 +37,13 @@ body {
 .slider .sliderimg{
   animation: sideAnimation 5s linear infinite;
 }
-  
+
+/*Menu.css*/
+.card-body
+{
+  background: linear-gradient(to left, green, rgb(194, 182, 17));
+}
+
 
 /* Events.css */
 
