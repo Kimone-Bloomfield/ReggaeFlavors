@@ -171,7 +171,7 @@ const Menu = () => {
   return (
     <div>
       <NavBar />
-      <div className="container mt-5" >
+      <div className="container mt-5 pt-4" >
         {menuItems.map((category, index) => (
           <div key={category.category} className="mb-5" >
             <h2
