@@ -1,4 +1,40 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🍲 ReggaeFlavors – Jamaican Restaurant Web App
+
+**Live Demo:** 🌐 [https://reggaeflavors.vercel.app/](https://reggaeflavors.vercel.app/)
+
+ReggaeFlavors is a front-end restaurant web app showcasing traditional Jamaican cuisine, local cultural events, and an integrated reservation system. Built with **Next.js** and **Supabase**, it delivers a clean, user experience that celebrates Jamaican food culture.
+
+---
+
+## ✨ Features
+
+- 🥘 Menu display featuring authentic Jamaican dishes
+- 📅 Event listings for cultural experiences
+- 📝 Reservation form with input validation
+- 🔗 Integrated with Supabase for backend data (menu items, events, reservations)
+- ✅ Deployed on [Vercel](https://vercel.com)
+
+---
+
+## 🔧 Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Database:** Supabase 
+- **Languages:** JavaScript, HTML, CSS
+- **Deployment:** Vercel
+
+---
+
+## 🧠 Project Goals
+
+- Practice building with **Next.js**
+- Learn **Supabase** integration for frontend/backend syncing
+- Design a clean and culturally themed restaurant UI
+
+---
+
+## 🚀 Getting Started (Local Development)
 
 ## Getting Started
 
