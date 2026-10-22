@@ -58,7 +58,7 @@ function MonthCalendar({ eventsByDate, selected, onSelect }) {
             transition={{ duration: 0.3 }}
           >
             {view.toLocaleString('en-US', { month: 'long' })}{' '}
-            <span className="italic text-sun">{view.getFullYear()}</span>
+            <span className="text-sun">{view.getFullYear()}</span>
           </motion.h3>
         </AnimatePresence>
         <div className="flex gap-2">
@@ -71,7 +71,7 @@ function MonthCalendar({ eventsByDate, selected, onSelect }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wider text-cream/40">
+      <div className="grid grid-cols-7 gap-1 text-center text-[13px] uppercase tracking-wider text-cream/80">
         {WEEKDAYS.map((d) => (
           <div key={d} className="py-2">{d}</div>
         ))}
@@ -100,7 +100,7 @@ function MonthCalendar({ eventsByDate, selected, onSelect }) {
                 aria-pressed={isSel}
                 aria-label={`${date.toDateString()}${has ? ', has events' : ''}`}
                 className={`relative flex aspect-square flex-col items-center justify-center rounded-xl text-sm transition-colors ${
-                  isSel ? 'text-ink' : has ? 'text-cream hover:bg-cream/10' : 'text-cream/45 hover:bg-cream/5'
+                  isSel ? 'text-ink' : has ? 'text-cream hover:bg-cream/10' : 'text-cream/80 hover:bg-cream/5'
                 }`}
               >
                 {isSel && <motion.span layoutId="cal-sel" className="absolute inset-0 rounded-xl bg-sun" transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }} />}
@@ -149,7 +149,7 @@ function Lightbox({ index, onClose, onStep }) {
             onClick={(e) => e.stopPropagation()}
           >
             <Image src={pastEvents[index].src} alt={pastEvents[index].caption} fill sizes="100vw" className="object-contain" />
-            <figcaption className="absolute -bottom-10 inset-x-0 text-center text-sm text-cream/70">{pastEvents[index].caption}</figcaption>
+            <figcaption className="absolute -bottom-10 inset-x-0 text-center text-sm text-cream/80">{pastEvents[index].caption}</figcaption>
           </motion.figure>
           <button type="button" onClick={onClose} aria-label="Close" className="absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 hover:bg-sun hover:text-ink">
             <Close />
@@ -229,7 +229,7 @@ export default function Events() {
         intro="Live bands, sound system Sundays and the occasional Independence Day bashment. Here's what's coming up."
         image="/images/reservation.jpg"
       >
-        <div className="mt-8 flex items-center gap-3 text-sm text-cream/70">
+        <div className="mt-8 flex items-center gap-3 text-sm text-cream/80">
           <Equalizer className="h-5" /> Riddim Fridays · 7 PM until late
         </div>
       </PageHero>
@@ -237,8 +237,8 @@ export default function Events() {
       {/* Upcoming list */}
       <section className="container-x py-24">
         <div className="flex items-end justify-between gap-6">
-          <h2 className="h-display text-5xl sm:text-6xl">
-            <SplitText text="Coming" /> <SplitText text="up next" className="italic text-sun" delay={0.1} />
+          <h2 className="h-display text-4xl sm:text-5xl">
+            <SplitText text="Coming" /> <SplitText text="up next" className="text-sun" delay={0.1} />
           </h2>
         </div>
 
@@ -254,16 +254,16 @@ export default function Events() {
               <motion.li key={`${e.date}-${e.title}`} variants={fadeUp}>
                 <div className="group grid items-center gap-6 py-8 transition-colors sm:grid-cols-12">
                   <div className="flex items-baseline gap-3 sm:col-span-2 sm:block">
-                    <span className="font-display text-6xl font-light leading-none transition-colors group-hover:text-sun">
+                    <span className="font-display text-6xl leading-none transition-colors group-hover:text-sun">
                       {String(d.getDate()).padStart(2, '0')}
                     </span>
-                    <span className="block text-xs uppercase tracking-eyebrow text-cream/50 sm:mt-2">
+                    <span className="block text-[13px] uppercase tracking-eyebrow text-cream/80 sm:mt-2">
                       {d.toLocaleString('en-US', { month: 'short', weekday: 'short' })}
                     </span>
                   </div>
                   <div className="sm:col-span-7">
                     <h3 className="font-display text-3xl">{e.title}</h3>
-                    <p className="mt-2 text-cream/60">{e.description}</p>
+                    <p className="mt-2 text-cream/75">{e.description}</p>
                     {e.time && (
                       <p className="mt-3 inline-flex items-center gap-2 text-sm text-sun">
                         <Clock width={16} height={16} /> {e.time}
@@ -279,7 +279,7 @@ export default function Events() {
               </motion.li>
             )
           })}
-          {!loading && upcoming.length === 0 && <li className="py-10 text-cream/60">No upcoming events yet. Check back soon.</li>}
+          {!loading && upcoming.length === 0 && <li className="py-10 text-cream/75">No upcoming events yet. Check back soon.</li>}
         </motion.ul>
       </section>
 
@@ -307,18 +307,18 @@ export default function Events() {
                   {dayEvents.length ? (
                     dayEvents.map((e) => (
                       <div key={e.title} className="rounded-2xl border border-leaf/40 bg-leaf/10 p-6">
-                        <p className="flex items-center gap-2 text-xs uppercase tracking-wider text-leaf">
+                        <p className="flex items-center gap-2 text-[13px] uppercase tracking-wider text-leaf">
                           <Music width={14} height={14} /> {e.time || 'All day'}
                         </p>
                         <p className="mt-2 font-display text-2xl">{e.title}</p>
-                        <p className="mt-2 text-sm text-cream/70">{e.description}</p>
+                        <p className="mt-2 text-sm text-cream/80">{e.description}</p>
                         <Link href={{ pathname: '/reservation', query: { date: e.date } }} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-sun">
                           Book this night <ArrowRight width={14} height={14} />
                         </Link>
                       </div>
                     ))
                   ) : (
-                    <div className="rounded-2xl border border-dashed border-cream/15 p-6 text-cream/60">
+                    <div className="rounded-2xl border border-dashed border-cream/15 p-6 text-cream/75">
                       No special event, just great food and a good selection on the speakers. Kitchen open 11 AM – 9 PM.
                     </div>
                   )}
@@ -334,8 +334,8 @@ export default function Events() {
         <Reveal>
           <p className="eyebrow">From the archive</p>
         </Reveal>
-        <h2 className="h-display mt-5 text-5xl sm:text-6xl">
-          <SplitText text="Nights to" /> <SplitText text="remember." className="italic text-sun" delay={0.1} />
+        <h2 className="h-display mt-5 text-4xl sm:text-5xl">
+          <SplitText text="Nights to" /> <SplitText text="remember." className="text-sun" delay={0.1} />
         </h2>
         <div className="mt-12 grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4">
           {pastEvents.map((p, i) => (

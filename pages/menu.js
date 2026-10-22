@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import Seo from '@/components/Seo'
@@ -55,7 +55,7 @@ function DishRow({ dish, onOpen }) {
             <span className="mb-1 h-px flex-1 border-b border-dotted border-cream/25" aria-hidden="true" />
             <span className="font-display text-xl text-sun">{formatPrice(dish.price)}</span>
           </div>
-          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-cream/60">{dish.description}</p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-cream/80">{dish.description}</p>
           <div className="mt-2.5 flex flex-wrap items-center gap-3">
             {dish.spice > 0 && (
               <span className="flex gap-0.5" aria-label={`Spice level ${dish.spice} of 3`}>
@@ -65,7 +65,7 @@ function DishRow({ dish, onOpen }) {
               </span>
             )}
             {dish.tags?.map((t) => (
-              <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-cream/45">
+              <span key={t} className="text-[13px] font-semibold uppercase tracking-wider text-cream/80">
                 {TAG_LABELS[t]}
               </span>
             ))}
@@ -80,7 +80,6 @@ export default function Menu() {
   const lenis = useLenis()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
-  const [active, setActive] = useState(menu[0].id)
   const [selected, setSelected] = useState(null)
   const closeModal = useCallback(() => setSelected(null), [])
 
@@ -98,26 +97,11 @@ export default function Menu() {
       .filter((cat) => cat.dishes.length > 0)
   }, [query, filter])
 
-  // Scrollspy: highlight the category currently in the middle of the viewport.
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => e.isIntersecting && setActive(e.target.id))
-      },
-      { rootMargin: '-45% 0px -50% 0px' }
-    )
-    filtered.forEach((c) => {
-      const el = document.getElementById(c.id)
-      if (el) io.observe(el)
-    })
-    return () => io.disconnect()
-  }, [filtered])
-
   const jumpTo = (id) => {
     const el = document.getElementById(id)
     if (!el) return
-    if (lenis) lenis.scrollTo(el, { offset: -150 })
-    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 150, behavior: 'smooth' })
+    if (lenis) lenis.scrollTo(el, { offset: -110 })
+    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 110, behavior: 'smooth' })
   }
 
   const total = filtered.reduce((n, c) => n + c.dishes.length, 0)
@@ -133,39 +117,34 @@ export default function Menu() {
         image="/images/table.jpg"
       />
 
-      {/* Sticky controls */}
-      <div className="sticky top-20 z-30 py-3">
+      {/* Controls: jump to a section, or search. Stays put at the top of the menu. */}
+      <div className="py-3">
         <div className="container-x">
-          <div className="flex flex-col gap-3 rounded-3xl border border-cream/10 bg-ink/80 p-2 backdrop-blur-xl lg:flex-row lg:items-center">
-            <div className="no-scrollbar flex gap-1 overflow-x-auto">
+          <div className="flex flex-col gap-3 rounded-3xl border border-cream/10 bg-ink-800 p-2 lg:flex-row lg:items-center">
+            <nav className="no-scrollbar flex gap-1 overflow-x-auto" aria-label="Menu sections">
               {filtered.map((c) => (
                 <button
                   key={c.id}
                   type="button"
                   onClick={() => jumpTo(c.id)}
-                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm transition-colors ${
-                    active === c.id ? 'text-ink' : 'text-cream/60 hover:text-cream'
-                  }`}
+                  className="shrink-0 rounded-full px-4 py-2 text-sm text-cream/80 transition-colors hover:bg-sun hover:text-ink"
                 >
-                  {active === c.id && (
-                    <motion.span layoutId="menu-tab" className="absolute inset-0 rounded-full bg-sun" transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }} />
-                  )}
-                  <span className="relative">{c.short}</span>
+                  {c.short}
                 </button>
               ))}
-            </div>
+            </nav>
             <label className="relative lg:ml-auto lg:w-72">
               <span className="sr-only">Search the menu</span>
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-cream/40" width={18} height={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-cream/80" width={18} height={18} />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search dishes…"
-                className="w-full rounded-full border border-cream/10 bg-ink-700 py-2.5 pl-11 pr-10 text-sm placeholder:text-cream/35 focus:border-sun focus:outline-none"
+                className="w-full rounded-full border border-cream/10 bg-ink-700 py-2.5 pl-11 pr-10 text-sm placeholder:text-cream/80 focus:border-sun focus:outline-none"
               />
               {query && (
-                <button type="button" onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-cream/50 hover:text-cream" aria-label="Clear search">
+                <button type="button" onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-cream/80 hover:text-cream" aria-label="Clear search">
                   <Close width={16} height={16} />
                 </button>
               )}
@@ -181,7 +160,7 @@ export default function Menu() {
               {f.label}
             </button>
           ))}
-          <span className="ml-auto text-sm text-cream/40">{total} dishes</span>
+          <span className="ml-auto text-sm text-cream/80">{total} dishes</span>
         </div>
 
         <AnimatePresence mode="popLayout">
@@ -194,7 +173,7 @@ export default function Menu() {
               className="rounded-3xl border border-dashed border-cream/15 py-24 text-center"
             >
               <p className="font-display text-3xl">Nothing on the stove for that.</p>
-              <p className="mt-2 text-cream/60">Try another search, or ask your server. We love a special request.</p>
+              <p className="mt-2 text-cream/75">Try another search, or ask your server. We love a special request.</p>
               <button type="button" onClick={() => { setQuery(''); setFilter('all') }} className="btn-ghost mt-6">
                 Reset filters
               </button>
@@ -206,13 +185,13 @@ export default function Menu() {
           {filtered.map((cat) => {
             const index = menu.findIndex((m) => m.id === cat.id)
             return (
-              <section key={cat.id} id={cat.id} className="grid scroll-mt-40 gap-8 lg:grid-cols-12">
+              <section key={cat.id} id={cat.id} className="grid gap-8 lg:grid-cols-12">
                 <div className="lg:col-span-4">
-                  <div className="lg:sticky lg:top-48">
+                  <div>
                     <Reveal>
-                      <span className="font-display text-6xl font-light italic text-cream/15">0{index + 1}</span>
+                      <span className="font-display text-6xl text-cream/15">0{index + 1}</span>
                       <h2 className="mt-2 font-display text-4xl leading-tight sm:text-5xl">{cat.category}</h2>
-                      <p className="mt-3 text-cream/55">{cat.blurb}</p>
+                      <p className="mt-3 text-cream/75">{cat.blurb}</p>
                       <div className="tricolor mt-6 h-0.5 w-16" />
                     </Reveal>
                   </div>
@@ -229,7 +208,7 @@ export default function Menu() {
           })}
         </div>
 
-        <Reveal className="mt-24 rounded-3xl border border-cream/10 p-8 text-sm text-cream/55">
+        <Reveal className="mt-24 rounded-3xl border border-cream/10 p-8 text-sm text-cream/75">
           Allergies or dietary needs? Let your server know. Our kitchen handles nuts, gluten, shellfish and dairy.
           Prices in USD, before tax and service.
         </Reveal>

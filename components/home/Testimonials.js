@@ -63,14 +63,14 @@ export default function Testimonials() {
                 exit={{ opacity: 0, x: dir * -60, filter: 'blur(8px)' }}
                 transition={{ duration: 0.6, ease }}
               >
-                <blockquote className="font-display text-3xl font-light leading-snug sm:text-5xl">{r.quote}</blockquote>
+                <blockquote className="font-display text-2xl font-medium leading-snug sm:text-4xl">{r.quote}</blockquote>
                 <figcaption className="mt-8 flex items-center gap-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink font-display text-lg text-sun">
                     {r.name[0]}
                   </span>
                   <span>
                     <span className="block font-semibold">{r.name}</span>
-                    <span className="text-sm text-ink/60">{r.meta}</span>
+                    <span className="text-sm text-ink/75">{r.meta}</span>
                   </span>
                 </figcaption>
               </motion.figure>

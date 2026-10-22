@@ -51,8 +51,8 @@ function Step({ n, title, children }) {
     <fieldset className="border-t border-cream/10 py-8">
       <legend className="sr-only">{title}</legend>
       <div className="mb-5 flex items-center gap-4" aria-hidden="true">
-        <span className="font-display text-sm italic text-sun">0{n}</span>
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-cream/70">{title}</span>
+        <span className="font-display text-sm text-sun">0{n}</span>
+        <span className="text-[13px] font-semibold uppercase tracking-[0.08em] text-cream/80">{title}</span>
       </div>
       {children}
     </fieldset>
@@ -72,22 +72,22 @@ function Success({ booking, onReset }) {
         <motion.path d="M24 41 l11 11 l21 -23" fill="none" stroke="#F6B91A" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.5, delay: 0.7, ease }} />
       </svg>
       <h2 className="mt-8 font-display text-5xl">
-        Yuh <span className="italic text-sun">booked!</span>
+        Yuh <span className="text-sun">booked!</span>
       </h2>
-      <p className="mt-4 max-w-sm text-cream/70">
+      <p className="mt-4 max-w-sm text-cream/80">
         Thanks, {booking.name.split(' ')[0]}. We&apos;ve saved a table and will email {booking.email} if anything changes.
       </p>
       <dl className="mt-10 grid w-full max-w-md grid-cols-3 divide-x divide-cream/10 rounded-2xl border border-cream/10 bg-ink-800 py-5 text-sm">
         <div>
-          <dt className="text-cream/50">Guests</dt>
+          <dt className="text-cream/80">Guests</dt>
           <dd className="mt-1 font-display text-2xl">{booking.guests}</dd>
         </div>
         <div>
-          <dt className="text-cream/50">Date</dt>
+          <dt className="text-cream/80">Date</dt>
           <dd className="mt-1 font-display text-2xl">{booking.date.slice(5).replace('-', '/')}</dd>
         </div>
         <div>
-          <dt className="text-cream/50">Time</dt>
+          <dt className="text-cream/80">Time</dt>
           <dd className="mt-1 font-display text-2xl">{to12h(booking.time)}</dd>
         </div>
       </dl>
@@ -227,9 +227,9 @@ export default function Reservation() {
 
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
             <p className="eyebrow">Reservations</p>
-            <h1 className="h-display mt-5 text-5xl sm:text-7xl">
+            <h1 className="h-display mt-5 text-4xl sm:text-6xl">
               <SplitText text="Save us" animateOnMount delay={d} />{' '}
-              <SplitText text="a seat." animateOnMount delay={d + 0.15} className="italic text-sun" />
+              <SplitText text="a seat." animateOnMount delay={d + 0.15} className="text-sun" />
             </h1>
             <motion.ul
               className="mt-8 grid gap-3 text-sm text-cream/80 sm:grid-cols-2"
@@ -260,7 +260,7 @@ export default function Reservation() {
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.7, ease, delay: booked === null ? 0 : 0.2 }}
               >
-                <p className="mb-2 text-cream/60">Book in under a minute. We hold tables for 15 minutes past your time.</p>
+                <p className="mb-2 text-cream/75">Book in under a minute. We hold tables for 15 minutes past your time.</p>
 
                 <Step n={1} title="How many guests?">
                   <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Number of guests">
@@ -289,7 +289,7 @@ export default function Reservation() {
                   </div>
                   <label className="relative block max-w-xs">
                     <span className="sr-only">Date</span>
-                    <Calendar className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-cream/40" width={18} height={18} />
+                    <Calendar className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-cream/80" width={18} height={18} />
                     <input
                       type="date"
                       required
@@ -304,7 +304,7 @@ export default function Reservation() {
 
                 <Step n={3} title="What time?">
                   {!form.date ? (
-                    <p className="text-sm text-cream/50">Choose a date to see available times.</p>
+                    <p className="text-sm text-cream/80">Choose a date to see available times.</p>
                   ) : (
                     <motion.div
                       key={form.date}
@@ -365,7 +365,7 @@ export default function Reservation() {
                 </AnimatePresence>
 
                 <div className="sticky bottom-4 z-10 flex flex-col gap-4 rounded-2xl border border-cream/10 bg-ink-700/90 p-4 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-cream/70">
+                  <p className="text-sm text-cream/80">
                     <span className="font-semibold text-cream">{form.guests} {form.guests === 1 ? 'guest' : 'guests'}</span>
                     {form.date && <> · {prettyDate(form.date)}</>}
                     {form.time && <> · {to12h(form.time)}</>}

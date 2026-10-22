@@ -50,9 +50,9 @@ function ContactForm() {
               <Check width={36} height={36} strokeWidth={2.5} />
             </motion.span>
             <h3 className="mt-6 font-display text-4xl">
-              Message <span className="italic text-sun">received.</span>
+              Message <span className="text-sun">received.</span>
             </h3>
-            <p className="mt-3 max-w-xs text-cream/65">Big up! We&apos;ll get back to you within a day.</p>
+            <p className="mt-3 max-w-xs text-cream/75">Big up! We&apos;ll get back to you within a day.</p>
             <button type="button" onClick={() => setStatus('idle')} className="btn-ghost mt-8">
               Send another
             </button>
@@ -147,7 +147,7 @@ export default function Contact() {
                     {href && <ArrowUpRight className="text-cream/30 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-sun" />}
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-cream/50">{label}</p>
+                    <p className="text-[13px] uppercase tracking-[0.08em] text-cream/80">{label}</p>
                     <p className="mt-2 font-display text-xl">{value}</p>
                   </div>
                 </Tag>
@@ -159,8 +159,8 @@ export default function Contact() {
         <div className="mt-20 grid gap-12 lg:grid-cols-2">
           <Reveal>
             <p className="eyebrow">Send a message</p>
-            <h2 className="mt-5 font-display text-5xl font-light">
-              Holla at <span className="italic text-sun">we.</span>
+            <h2 className="mt-5 font-display text-5xl">
+              Holla at <span className="text-sun">we.</span>
             </h2>
             <div className="mt-10">
               <ContactForm />

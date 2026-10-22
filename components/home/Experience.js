@@ -34,8 +34,8 @@ export function Pillars() {
           <Reveal>
             <p className="eyebrow">The experience</p>
           </Reveal>
-          <h2 className="h-display mt-5 text-5xl sm:text-6xl">
-            <SplitText text="More than dinner." /> <SplitText text="It's a whole mood." className="italic text-sun" delay={0.15} />
+          <h2 className="h-display mt-5 text-4xl sm:text-5xl">
+            <SplitText text="More than dinner." /> <SplitText text="It's a whole mood." className="text-sun" delay={0.15} />
           </h2>
         </div>
 
@@ -57,7 +57,7 @@ export function Pillars() {
                 <Icon width={26} height={26} />
               </span>
               <h3 className="mt-8 font-display text-3xl">{title}</h3>
-              <p className="mt-4 leading-relaxed text-cream/65">{body}</p>
+              <p className="mt-4 leading-relaxed text-cream/75">{body}</p>
               {title === 'Live Riddims' && <Equalizer className="mt-6 h-5" bars={7} />}
             </motion.div>
           ))}
@@ -94,8 +94,8 @@ export function DiningRoom() {
         </Reveal>
         <div className="mt-10 space-y-2">
           {lines.map((l, i) => (
-            <p key={l.a} className="h-display text-5xl sm:text-7xl lg:text-8xl">
-              <SplitText text={l.a} className="italic text-sun" delay={i * 0.25} />{' '}
+            <p key={l.a} className="h-display text-4xl sm:text-6xl lg:text-7xl">
+              <SplitText text={l.a} className="text-sun" delay={i * 0.25} />{' '}
               <SplitText text={l.b} delay={i * 0.25 + 0.1} />
             </p>
           ))}

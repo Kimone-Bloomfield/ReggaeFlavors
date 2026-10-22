@@ -28,17 +28,13 @@ module.exports = {
         ember: '#E4572E',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        eyebrow: '0.32em',
+        eyebrow: '0.14em',
       },
       keyframes: {
-        marquee: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-50%)' },
-        },
         spin_slow: {
           to: { transform: 'rotate(360deg)' },
         },
@@ -55,7 +51,6 @@ module.exports = {
         },
       },
       animation: {
-        marquee: 'marquee 40s linear infinite',
         'spin-slow': 'spin_slow 18s linear infinite',
         eq: 'eq 1.1s ease-in-out infinite',
         grain: 'grain 0.8s steps(4) infinite',

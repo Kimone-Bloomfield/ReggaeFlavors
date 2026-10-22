@@ -1,20 +1,19 @@
 import '../styles/index.css'
 import { useRouter } from 'next/router'
-import { Fraunces, Manrope } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { AnimatePresence, MotionConfig } from 'framer-motion'
 import Layout from '@/components/Layout'
 import PageTransition from '@/components/PageTransition'
 import SmoothScroll, { useLenis } from '@/components/SmoothScroll'
 
-const display = Fraunces({
+const display = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
-  axes: ['SOFT', 'WONK', 'opsz'],
+  weight: ['500', '600', '700'],
   variable: '--font-display',
   display: 'swap',
 })
 
-const sans = Manrope({
+const sans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
@@ -32,7 +31,7 @@ function Pages({ Component, pageProps }) {
   return (
     <Layout>
       <AnimatePresence mode="wait" onExitComplete={resetScroll}>
-        <PageTransition key={router.pathname} route={router.pathname}>
+        <PageTransition key={router.pathname}>
           <Component {...pageProps} />
         </PageTransition>
       </AnimatePresence>

@@ -22,7 +22,7 @@ A restaurant website for an authentic Jamaican kitchen in Kingston: pimento-smok
 ## 🔧 Tech Stack
 
 - **Framework:** [Next.js 14](https://nextjs.org/) (pages router)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with Fraunces + Manrope via `next/font`
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with Plus Jakarta Sans + Inter via `next/font`
 - **Animation:** [Framer Motion](https://www.framer.com/motion/), [Lenis](https://lenis.darkroom.engineering/), Canvas
 - **Database:** [Supabase](https://supabase.com/) (`reservations`, `contact`, `events` tables)
 - **Deployment:** Vercel

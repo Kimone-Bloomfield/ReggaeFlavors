@@ -66,7 +66,7 @@ export default function Story() {
             <p className="font-display text-4xl text-sun">
               <Counter to={24} suffix="hr" />
             </p>
-            <p className="mt-1 text-sm text-cream/70">Every bird sits in our jerk marinade before it meets the pimento.</p>
+            <p className="mt-1 text-sm text-cream/80">Every bird sits in our jerk marinade before it meets the pimento.</p>
           </motion.div>
         </div>
 
@@ -74,17 +74,17 @@ export default function Story() {
           <Reveal>
             <p className="eyebrow">Our story</p>
           </Reveal>
-          <h2 className="h-display mt-6 text-5xl sm:text-6xl">
+          <h2 className="h-display mt-6 text-4xl sm:text-5xl">
             <SplitText text="Where the sun meets the sea," />{' '}
-            <SplitText text="and the pot meets the people." className="italic text-sun" delay={0.2} />
+            <SplitText text="and the pot meets the people." className="text-sun" delay={0.2} />
           </h2>
           <Reveal delay={0.2}>
-            <p className="mt-8 text-lg leading-relaxed text-cream/70">
+            <p className="mt-8 text-lg leading-relaxed text-cream/80">
               Reggae Flavors started with a simple idea: bring the cooking of a Jamaican Sunday table to the heart of
               Kingston. Our recipes are handed down, not written down. Fire-roasted, slow-braised and seasoned by feel,
               the way grandma taught us.
             </p>
-            <p className="mt-4 text-lg leading-relaxed text-cream/70">
+            <p className="mt-4 text-lg leading-relaxed text-cream/80">
               Pull up a chair, let the bassline settle in, and stay a while. Here, every meal is a vibe.
             </p>
           </Reveal>
@@ -92,10 +92,10 @@ export default function Story() {
           <div className="mt-12 grid grid-cols-3 gap-6 border-t border-cream/10 pt-8">
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={0.1 * i}>
-                <p className="font-display text-4xl font-light sm:text-5xl">
+                <p className="font-display text-4xl sm:text-5xl">
                   <Counter to={s.value} suffix={s.suffix} />
                 </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-cream/50">{s.label}</p>
+                <p className="mt-2 text-[13px] uppercase tracking-[0.08em] text-cream/80">{s.label}</p>
               </Reveal>
             ))}
           </div>

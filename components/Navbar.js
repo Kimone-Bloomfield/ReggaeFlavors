@@ -70,7 +70,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={`relative block rounded-full px-5 py-2 text-sm transition-colors ${
-                      isActive(link.href) ? 'text-cream' : 'text-cream/60 hover:text-cream'
+                      isActive(link.href) ? 'text-cream' : 'text-cream/75 hover:text-cream'
                     }`}
                   >
                     {link.name}
@@ -125,16 +125,16 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="flex items-baseline gap-4 border-b border-cream/10 py-4 font-display text-5xl"
+                    className="flex items-baseline gap-4 border-b border-cream/10 py-4 font-display text-4xl"
                   >
-                    <span className="font-sans text-xs text-sun">0{i + 1}</span>
-                    <span className={isActive(link.href) ? 'italic text-sun' : ''}>{link.name}</span>
+                    <span className="font-sans text-sm text-sun">0{i + 1}</span>
+                    <span className={isActive(link.href) ? 'text-sun' : ''}>{link.name}</span>
                   </Link>
                 </motion.li>
               ))}
             </motion.ul>
             <motion.div
-              className="container-x mt-auto pb-10 text-sm text-cream/60"
+              className="container-x mt-auto pb-10 text-sm text-cream/75"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.6 } }}
             >

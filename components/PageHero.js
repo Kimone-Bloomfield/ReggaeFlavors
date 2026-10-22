@@ -30,18 +30,18 @@ export default function PageHero({ eyebrow, title, accent, intro, image, childre
         >
           {eyebrow}
         </motion.p>
-        <h1 className="h-display mt-6 max-w-4xl text-6xl sm:text-7xl lg:text-8xl">
+        <h1 className="h-display mt-6 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">
           <SplitText text={title} animateOnMount delay={delay + 0.1} />
           {accent && (
             <>
               {' '}
-              <SplitText text={accent} animateOnMount delay={delay + 0.3} className="italic text-sun" />
+              <SplitText text={accent} animateOnMount delay={delay + 0.3} className="text-sun" />
             </>
           )}
         </h1>
         {intro && (
           <motion.p
-            className="mt-6 max-w-xl text-lg text-cream/70"
+            className="mt-6 max-w-xl text-lg text-cream/80"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease, delay: delay + 0.5 }}

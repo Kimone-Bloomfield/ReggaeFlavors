@@ -12,8 +12,8 @@ export function Monogram({ className = 'h-10 w-10' }) {
         x="24"
         y="30"
         textAnchor="middle"
-        fontFamily="var(--font-display), Georgia, serif"
-        fontStyle="italic"
+        fontFamily="var(--font-display), system-ui, sans-serif"
+        fontWeight="700"
         fontSize="17"
         fill="#F6B91A"
       >
@@ -30,7 +30,7 @@ export default function Logo({ onClick }) {
         <Monogram />
       </span>
       <span className="font-display text-xl leading-none tracking-tight">
-        Reggae<span className="italic text-sun"> Flavors</span>
+        Reggae<span className="text-sun"> Flavors</span>
       </span>
     </Link>
   )

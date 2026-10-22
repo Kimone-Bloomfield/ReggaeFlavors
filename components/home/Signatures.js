@@ -9,7 +9,7 @@ import { Reveal, SplitText } from '../motion'
 const totalDishes = menu.reduce((n, c) => n + c.dishes.length, 0)
 const useIsoLayoutEffect = typeof window === 'undefined' ? () => {} : useLayoutEffect
 
-function DishCard({ dish, index }) {
+function DishCard({ dish }) {
   return (
     <article className="group relative h-[62vh] min-h-[420px] w-[78vw] shrink-0 snap-center overflow-hidden rounded-[2rem] sm:w-[46vw] lg:w-[30vw]">
       <Image
@@ -20,9 +20,6 @@ function DishCard({ dish, index }) {
         className="object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
-      <span className="absolute left-6 top-6 font-display text-7xl font-light italic text-cream/25">
-        0{index + 1}
-      </span>
       <div className="absolute inset-x-0 bottom-0 p-7">
         {dish.spice > 0 && (
           <div className="mb-3 flex gap-1">
@@ -37,7 +34,7 @@ function DishCard({ dish, index }) {
             {formatPrice(dish.price)}
           </span>
         </div>
-        <p className="mt-3 max-h-0 overflow-hidden text-sm text-cream/75 opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100">
+        <p className="mt-3 text-[15px] leading-relaxed text-cream/85">
           {dish.description}
         </p>
       </div>
@@ -86,8 +83,8 @@ export default function Signatures() {
             <Reveal>
               <p className="eyebrow">House signatures</p>
             </Reveal>
-            <h2 className="h-display mt-5 text-5xl sm:text-7xl">
-              <SplitText text="The plates" /> <SplitText text="they talk about." className="italic text-sun" delay={0.15} />
+            <h2 className="h-display mt-5 text-4xl sm:text-6xl">
+              <SplitText text="The plates" /> <SplitText text="they talk about." className="text-sun" delay={0.15} />
             </h2>
           </div>
           <Link href="/menu" className="btn-ghost group hidden shrink-0 md:inline-flex">
@@ -100,8 +97,8 @@ export default function Signatures() {
           style={pinned ? { x } : undefined}
           className={`flex gap-6 px-5 sm:px-8 ${pinned ? 'w-max' : 'no-scrollbar snap-x snap-mandatory overflow-x-auto pb-4'}`}
         >
-          {signatureDishes.map((dish, i) => (
-            <DishCard key={dish.name} dish={dish} index={i} />
+          {signatureDishes.map((dish) => (
+            <DishCard key={dish.name} dish={dish} />
           ))}
           <Link
             href="/menu"
@@ -111,7 +108,7 @@ export default function Signatures() {
               <ArrowRight width={28} height={28} />
             </span>
             <span className="font-display text-3xl">
-              See all <span className="italic text-sun">{totalDishes} dishes</span>
+              See all <span className="text-sun">{totalDishes} dishes</span>
             </span>
           </Link>
         </motion.div>

@@ -62,7 +62,7 @@ export default function DishModal({ dish, onClose }) {
 
               <div className="flex flex-wrap gap-2">
                 {dish.tags?.map((t) => (
-                  <span key={t} className="rounded-full border border-sun/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-sun">
+                  <span key={t} className="rounded-full border border-sun/40 px-3 py-1 text-[13px] font-semibold uppercase tracking-wider text-sun">
                     {TAG_LABELS[t]}
                   </span>
                 ))}
@@ -89,7 +89,7 @@ export default function DishModal({ dish, onClose }) {
                         </motion.span>
                       ))}
                     </div>
-                    <span className="text-sm text-cream/60">{SPICE_LABELS[dish.spice]}</span>
+                    <span className="text-sm text-cream/75">{SPICE_LABELS[dish.spice]}</span>
                   </div>
                 </div>
                 {dish.ingredients && (

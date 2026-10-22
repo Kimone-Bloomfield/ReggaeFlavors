@@ -15,6 +15,22 @@
 
   body {
     @apply font-sans bg-ink text-cream;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings: semibold, slightly tightened. Utilities can still override the weight. */
+  .font-display {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
@@ -49,7 +65,7 @@
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-eyebrow text-sun;
+    @apply inline-flex items-center gap-3 text-[13px] font-semibold uppercase tracking-eyebrow text-sun;
   }
   .eyebrow::before {
     content: '';
@@ -57,12 +73,12 @@
   }
 
   .h-display {
-    @apply font-display font-light leading-[0.95] tracking-tight;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    @apply font-display font-semibold leading-[1.05];
+    letter-spacing: -0.03em;
   }
 
   .btn {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide transition-[transform,background-color,color] duration-300 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full min-h-12 px-7 py-3.5 text-[15px] font-semibold transition-[transform,background-color,color] duration-300 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
   }
   .btn-primary {
     @apply btn bg-sun text-ink hover:bg-cream;
@@ -72,14 +88,14 @@
   }
 
   .field {
-    @apply w-full rounded-xl border border-cream/15 bg-ink-800/70 px-4 py-3.5 text-cream placeholder:text-cream/35 transition-colors focus:border-sun focus:outline-none focus:ring-0;
+    @apply w-full rounded-xl border border-cream/15 bg-ink-800/70 px-4 py-3.5 text-cream placeholder:text-cream/50 transition-colors focus:border-sun focus:outline-none focus:ring-0;
   }
   .label {
-    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-cream/60;
+    @apply mb-2 block text-[13px] font-semibold uppercase tracking-[0.08em] text-cream/80;
   }
 
   .chip {
-    @apply rounded-full border border-cream/15 px-4 py-2 text-sm transition-colors hover:border-cream/50;
+    @apply min-h-11 rounded-full border border-cream/25 px-4 py-2 text-[15px] transition-colors hover:border-cream/60;
   }
   .chip[aria-pressed='true'],
   .chip[aria-checked='true'] {
@@ -98,7 +114,7 @@
   inset: -50%;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 0.8s steps(4) infinite;
 }
@@ -120,7 +136,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .grain::after,
-  .animate-marquee,
   .animate-spin-slow,
   .animate-eq {
     animation: none !important;

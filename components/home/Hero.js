@@ -45,7 +45,7 @@ export default function Hero() {
 
       <motion.div className="container-x relative z-10" style={{ y: textY, opacity: fade }}>
         <motion.div
-          className="mb-8 inline-flex items-center gap-3 rounded-full border border-cream/15 bg-ink/40 px-4 py-2 text-xs backdrop-blur-md"
+          className="mb-8 inline-flex items-center gap-3 rounded-full border border-cream/15 bg-ink/50 px-4 py-2 text-sm backdrop-blur-md"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease, delay: d }}
@@ -54,14 +54,14 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-leaf" />
           </span>
-          Open today · 11 AM – 9 PM · {site.addressShort}
+          Open today · 11 AM – 9 PM<span className="hidden sm:inline"> · {site.addressShort}</span>
         </motion.div>
 
-        <h1 className="h-display text-[12.5vw] sm:text-[11vw] lg:text-[9.5rem]">
+        <h1 className="h-display text-[10vw] sm:text-[8vw] lg:text-[6.5rem]">
           <span className="block">
             <SplitText text="Taste the island." animateOnMount delay={d + 0.1} />
           </span>
-          <span className="block italic text-sun">
+          <span className="block text-sun">
             <SplitText text="Feel the riddim." animateOnMount delay={d + 0.35} />
           </span>
         </h1>
@@ -100,7 +100,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-eyebrow text-cream/50 md:flex"
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-[13px] uppercase tracking-eyebrow text-cream/80 md:flex"
         style={{ opacity: fade }}
       >
         Scroll
