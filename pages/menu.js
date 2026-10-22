@@ -37,10 +37,7 @@ function DishRow({ dish, onOpen }) {
         onClick={() => onOpen(dish)}
         className="group flex w-full items-start gap-5 rounded-2xl p-3 text-left transition-colors hover:bg-cream/[0.04] sm:p-4"
       >
-        <motion.div
-          layoutId={`dish-img-${dish.name}`}
-          className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-24"
-        >
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-24">
           <Image
             src={dish.image}
             alt=""
@@ -48,7 +45,7 @@ function DishRow({ dish, onOpen }) {
             sizes="96px"
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
-        </motion.div>
+        </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-3">
             <h3 className="font-display text-xl sm:text-2xl">{dish.name}</h3>
