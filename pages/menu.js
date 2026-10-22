@@ -1,235 +1,241 @@
-import React, { useState } from "react";
-import NavBar from "../components/navBar";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
+import Seo from '@/components/Seo'
+import PageHero from '@/components/PageHero'
+import DishModal, { TAG_LABELS } from '@/components/DishModal'
+import { Pepper, Search, Close } from '@/components/Icons'
+import { Reveal, ease } from '@/components/motion'
+import { useLenis } from '@/components/SmoothScroll'
+import { menu, formatPrice } from '@/data/menu'
 
-const Menu = () => {
-  const [selectedDish, setSelectedDish] = useState(null);
+const FILTERS = [
+  { id: 'all', label: 'Everything' },
+  { id: 'signature', label: 'House favourites' },
+  { id: 'spicy', label: 'Bring the heat' },
+  { id: 'veg', label: 'Vegetarian' },
+  { id: 'gf', label: 'Gluten-free' },
+]
 
-  const menuItems = [
-    {
-        category: "Appetizers",
-        dishes: [
-        
-          {
-            name: "Chicken Foot Soup",
-            description: "Hearty soup with chicken feet and vegetables.",
-            price: "$5.99",
-            image: "/chicken foot soup.jpeg",
-          },
-          {
-            name: "Red Peas Soup",
-            description: "A flavorful soup made with red peas and assorted vegetables.",
-            price: "$5.99",
-            image: "/red peas.jpg",
-          },
-          {
-            name: "Fritters (Banana or Saltfish)",
-            description: "Deep-fried fritters made with either ripe bananas or salted fish.",
-            price: "$4.99",
-            image: "/fritters.jpeg",
-          },
-          {
-            name: "Mannish Water Soup",
-            description: "Traditional Jamaican soup with goat meat and vegetables.",
-            price: "$6.99",
-            image: "/mannish.jpeg",
-          },
-        ],
-    },        
-    {
-      category: "Main Courses",
-      dishes: [
-        {
-          name: "Jerk Chicken",
-          description: "Grilled chicken marinated in jerk spices.",
-          price: "$12.99",
-          image: "/jerk.webp",
-          spiceLevel: "🌶️🌶️🌶️",
-        },
-        {
-          name: "Curry Goat",
-          description: "Slow-cooked goat meat in flavorful curry sauce.",
-          price: "$14.99",
-          image: "/curry.jpeg",
-        },
-        {
-          name: "Escovitch Fish",
-          description: "Fried fish topped with spicy pickled vegetables.",
-          price: "$16.99",
-          image: "/fish.jpg",
-        },
-        {
-            name: "Oxtail",
-            description: "Slow-cooked oxtail, tender and succulent, braised to perfection in a savory broth with aromatic herbs and spices. Served with a side of creamy mashed potatoes and seasonal vegetables.",
-            price: "$16.99",
-            image: "/oxtail.jpeg"
-          }          
-      ],
-    },
-    {
-        category: "Sides", 
-        dishes: [
-          {
-            name: "Festivals",
-            description: "Sweet fried dumplings, often served as a side dish.",
-            price: "$3.49",
-            image: "/festival.jpeg",
-          },
-          {
-            name: "Bammy",
-            description: "Flatbread made from cassava, typically grilled or fried.",
-            price: "$2.99",
-            image: "/bammy.jpeg",
-          },
-          {
-            name: "Plantain (Green/Ripe)",
-            description: "Sliced and fried green or ripe plantains, a delicious side.",
-            price: "$2.49",
-            image: "/plantain.jpeg",
-          },
-          {
-            name: "Jamaican Rice and Peas",
-            description: "Fragrant rice cooked with coconut milk and kidney beans.",
-            price: "$2.99",
-            image: "/rice and peas.jpeg",
-          },
-        ],
-      },   
-    {
-      category: "Beverages",
-      dishes: [
-        {
-          name: "Sorrel Punch",
-          description: "Refreshing Jamaican drink made from sorrel petals.",
-          price: "$3.99",
-          image: "/sorrel.jpg",
-        },
-        {
-          name: "Coconut Water",
-          description: "Fresh coconut water served chilled.",
-          price: "$2.99",
-          image: "/coconut water.jpeg",
-        },
+const matchesFilter = (dish, filter) => {
+  if (filter === 'all') return true
+  if (filter === 'spicy') return dish.spice >= 2
+  return dish.tags?.includes(filter)
+}
 
-        {
-            name: "Rum Punch",
-            description: "Refreshing tropical drink with a mix of rum and fruit juices.",
-            price: "$4.99",
-            image: "/rum punch.jpg",
-          },
-          {
-            name: "Ting Soda",
-            description: "Carbonated grapefruit-flavored soda.",
-            price: "$1.99",
-            image: "/ting.jpg",
-          },
-      ],
-    },
-        {
-            category: "Desserts",
-            dishes: [
-              {
-                name: "Rum Cake",
-                description: "Rich cake soaked in Jamaican rum.",
-                ingredients: ["Flour", "Sugar", "Rum"],
-                price: "$7.99",
-                image: "/rumcake.jpeg",
-              },
-              {
-                name: "Sweet Potato Pudding",
-                description: "Delicious pudding made from sweet potatoes.",
-                price: "$6.99",
-                image: "/pudding.jpeg",
-              },
-              {
-                name: "Grater Cake",
-                description: "Sweet coconut-based cake with a gratable texture.",
-                price: "$5.99",
-                image: "/grater cake.jpg",
-              },
-              {
-                name: "Blue Draws",
-                description: "Traditional Jamaican dessert made with cornmeal and coconut.",
-                price: "$4.99",
-                image: "/blue draws.jpg",
-              },
-            ],
-          },
-          
-  ];
+function DishRow({ dish, onOpen }) {
+  return (
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.45, ease }}
+    >
+      <button
+        type="button"
+        onClick={() => onOpen(dish)}
+        className="group flex w-full items-start gap-5 rounded-2xl p-3 text-left transition-colors hover:bg-cream/[0.04] sm:p-4"
+      >
+        <motion.div
+          layoutId={`dish-img-${dish.name}`}
+          className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl sm:h-24 sm:w-24"
+        >
+          <Image
+            src={dish.image}
+            alt=""
+            fill
+            sizes="96px"
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        </motion.div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline gap-3">
+            <h3 className="font-display text-xl sm:text-2xl">{dish.name}</h3>
+            <span className="mb-1 h-px flex-1 border-b border-dotted border-cream/25" aria-hidden="true" />
+            <span className="font-display text-xl text-sun">{formatPrice(dish.price)}</span>
+          </div>
+          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-cream/60">{dish.description}</p>
+          <div className="mt-2.5 flex flex-wrap items-center gap-3">
+            {dish.spice > 0 && (
+              <span className="flex gap-0.5" aria-label={`Spice level ${dish.spice} of 3`}>
+                {Array.from({ length: dish.spice }).map((_, i) => (
+                  <Pepper key={i} />
+                ))}
+              </span>
+            )}
+            {dish.tags?.map((t) => (
+              <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-cream/45">
+                {TAG_LABELS[t]}
+              </span>
+            ))}
+          </div>
+        </div>
+      </button>
+    </motion.li>
+  )
+}
 
-  const getGradientColor = (index) => {
-    const colors = ["yellow", "black"];
-    const colorIndex = index % colors.length;
-    return colors[colorIndex];
-  };
+export default function Menu() {
+  const lenis = useLenis()
+  const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState('all')
+  const [active, setActive] = useState(menu[0].id)
+  const [selected, setSelected] = useState(null)
+  const closeModal = useCallback(() => setSelected(null), [])
 
-  const handleDishClick = (dish) => {
-    setSelectedDish(dish === selectedDish ? null : dish);
-  };
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return menu
+      .map((cat) => ({
+        ...cat,
+        dishes: cat.dishes.filter(
+          (d) =>
+            matchesFilter(d, filter) &&
+            (!q || d.name.toLowerCase().includes(q) || d.description.toLowerCase().includes(q))
+        ),
+      }))
+      .filter((cat) => cat.dishes.length > 0)
+  }, [query, filter])
+
+  // Scrollspy: highlight the category currently in the middle of the viewport.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => e.isIntersecting && setActive(e.target.id))
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    )
+    filtered.forEach((c) => {
+      const el = document.getElementById(c.id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [filtered])
+
+  const jumpTo = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    if (lenis) lenis.scrollTo(el, { offset: -150 })
+    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 150, behavior: 'smooth' })
+  }
+
+  const total = filtered.reduce((n, c) => n + c.dishes.length, 0)
 
   return (
-    <div>
-      <NavBar />
-      <div className="container mt-5 pt-4" >
-        {menuItems.map((category, index) => (
-          <div key={category.category} className="mb-5" >
-            <h2
-              style={{
-                background: `linear-gradient(to right, ${getGradientColor(index)}, transparent)`,
-                display: "inline-block",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                color: "white",
-              }}
-            >
-              {category.category}
-            </h2>
-            <div className="row">
-              {category.dishes.map((dish) => (
-                <div
-                  key={dish.name}
-                  className="col-md-3 mb-3"
-                  onClick={() => handleDishClick(dish)}
-                  style={{ cursor: "pointer" }}
+    <>
+      <Seo title="Menu" description="Jerk chicken, oxtail, curry goat, ackee & saltfish, rum punch and more. The full Reggae Flavors menu." />
+      <PageHero
+        eyebrow="The menu"
+        title="Cooked low, slow"
+        accent="& with love."
+        intro="Everything is made from scratch daily. Mains come with rice & peas, steamed cabbage and sweet plantain."
+        image="/images/table.jpg"
+      />
+
+      {/* Sticky controls */}
+      <div className="sticky top-20 z-30 py-3">
+        <div className="container-x">
+          <div className="flex flex-col gap-3 rounded-3xl border border-cream/10 bg-ink/80 p-2 backdrop-blur-xl lg:flex-row lg:items-center">
+            <div className="no-scrollbar flex gap-1 overflow-x-auto">
+              {filtered.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => jumpTo(c.id)}
+                  className={`relative shrink-0 rounded-full px-4 py-2 text-sm transition-colors ${
+                    active === c.id ? 'text-ink' : 'text-cream/60 hover:text-cream'
+                  }`}
                 >
-                  <div className={`card ${selectedDish === dish ? "bg-primary text-white" : ""}`}>
-                    <img
-                      src={dish.image}
-                      alt={dish.name}
-                      className="card-img-top"
-                      style={{ borderRadius: "8px 8px 0 0" }}
-                    />
-                    <div className="card-body">
-                      <h3 className="card-title">{dish.name}</h3>
-                      <p className="card-text">{dish.description}</p>
-                      <p className="card-text">
-                        <strong>Price:</strong> {dish.price}
-                      </p>
-                    </div>
-                    {selectedDish === dish && (
-                      <div className="card-footer">
-                        {dish.ingredients && (
-                          <p>
-                            <strong>Ingredients:</strong> {dish.ingredients.join(", ")}
-                          </p>
-                        )}
-                        {dish.spiceLevel && (
-                          <p>
-                            <strong>Spice Level:</strong> {dish.spiceLevel}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  {active === c.id && (
+                    <motion.span layoutId="menu-tab" className="absolute inset-0 rounded-full bg-sun" transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }} />
+                  )}
+                  <span className="relative">{c.short}</span>
+                </button>
               ))}
             </div>
+            <label className="relative lg:ml-auto lg:w-72">
+              <span className="sr-only">Search the menu</span>
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-cream/40" width={18} height={18} />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search dishes…"
+                className="w-full rounded-full border border-cream/10 bg-ink-700 py-2.5 pl-11 pr-10 text-sm placeholder:text-cream/35 focus:border-sun focus:outline-none"
+              />
+              {query && (
+                <button type="button" onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-cream/50 hover:text-cream" aria-label="Clear search">
+                  <Close width={16} height={16} />
+                </button>
+              )}
+            </label>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
-  );
-};
 
-export default Menu;
+      <section className="container-x pb-32 pt-10">
+        <div className="mb-12 flex flex-wrap items-center gap-2" role="group" aria-label="Dietary filters">
+          {FILTERS.map((f) => (
+            <button key={f.id} type="button" aria-pressed={filter === f.id} onClick={() => setFilter(f.id)} className="chip">
+              {f.label}
+            </button>
+          ))}
+          <span className="ml-auto text-sm text-cream/40">{total} dishes</span>
+        </div>
+
+        <AnimatePresence mode="popLayout">
+          {filtered.length === 0 && (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="rounded-3xl border border-dashed border-cream/15 py-24 text-center"
+            >
+              <p className="font-display text-3xl">Nothing on the stove for that.</p>
+              <p className="mt-2 text-cream/60">Try another search, or ask your server. We love a special request.</p>
+              <button type="button" onClick={() => { setQuery(''); setFilter('all') }} className="btn-ghost mt-6">
+                Reset filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="space-y-24">
+          {filtered.map((cat) => {
+            const index = menu.findIndex((m) => m.id === cat.id)
+            return (
+              <section key={cat.id} id={cat.id} className="grid scroll-mt-40 gap-8 lg:grid-cols-12">
+                <div className="lg:col-span-4">
+                  <div className="lg:sticky lg:top-48">
+                    <Reveal>
+                      <span className="font-display text-6xl font-light italic text-cream/15">0{index + 1}</span>
+                      <h2 className="mt-2 font-display text-4xl leading-tight sm:text-5xl">{cat.category}</h2>
+                      <p className="mt-3 text-cream/55">{cat.blurb}</p>
+                      <div className="tricolor mt-6 h-0.5 w-16" />
+                    </Reveal>
+                  </div>
+                </div>
+                <motion.ul layout className="grid gap-2 lg:col-span-8 xl:grid-cols-2">
+                  <AnimatePresence mode="popLayout">
+                    {cat.dishes.map((dish) => (
+                      <DishRow key={dish.name} dish={dish} onOpen={setSelected} />
+                    ))}
+                  </AnimatePresence>
+                </motion.ul>
+              </section>
+            )
+          })}
+        </div>
+
+        <Reveal className="mt-24 rounded-3xl border border-cream/10 p-8 text-sm text-cream/55">
+          Allergies or dietary needs? Let your server know. Our kitchen handles nuts, gluten, shellfish and dairy.
+          Prices in USD, before tax and service.
+        </Reveal>
+      </section>
+
+      <DishModal dish={selected} onClose={closeModal} />
+    </>
+  )
+}

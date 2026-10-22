@@ -1,72 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-# 🍲 ReggaeFlavors – Jamaican Restaurant Web App
+# 🍲 Reggae Flavors – Jamaican Kitchen & Rum Bar
 
 **Live Demo:** 🌐 [https://reggaeflavors.vercel.app/](https://reggaeflavors.vercel.app/)
 
-ReggaeFlavors is a front-end restaurant web app showcasing traditional Jamaican cuisine, local cultural events, and an integrated reservation system. Built with **Next.js** and **Supabase**, it delivers a clean, user experience that celebrates Jamaican food culture.
+A restaurant website for an authentic Jamaican kitchen in Kingston: pimento-smoked jerk, slow-braised oxtail, live riddims and online table booking. Built with **Next.js**, **Tailwind CSS**, **Framer Motion** and **Supabase**.
 
 ---
 
 ## ✨ Features
 
-- 🥘 Menu display featuring authentic Jamaican dishes
-- 📅 Event listings for cultural experiences
-- 📝 Reservation form with input validation
-- 🔗 Integrated with Supabase for backend data (menu items, events, reservations)
-- ✅ Deployed on [Vercel](https://vercel.com)
+- 🎬 **Cinematic motion**: branded intro, curtain page transitions, Ken Burns hero with rising embers, masked headline reveals, parallax imagery and smooth scrolling (Lenis)
+- 🥘 **Interactive menu**: sticky category tabs with scrollspy, live search, dietary filters (vegetarian, gluten-free, spicy) and animated dish detail cards with a scotch-bonnet heat meter
+- 🍗 **Pinned horizontal showcase** of house signature dishes
+- 📅 **Events**: upcoming events, a custom animated calendar and a lightbox photo gallery (falls back to the recurring weekly line-up if the database is unavailable)
+- 📝 **Reservations**: party size, quick date picks and half-hour time slots with live availability; full or past slots are disabled automatically
+- ✉️ **Contact** form, map and opening hours
+- ♿ Respects `prefers-reduced-motion`, keyboard focus states, skip link and semantic markup
+- 📱 Fully responsive with a full-screen animated mobile menu
 
 ---
 
 ## 🔧 Tech Stack
 
-- **Framework:** [Next.js](https://nextjs.org/)
-- **Database:** Supabase 
-- **Languages:** JavaScript, HTML, CSS
+- **Framework:** [Next.js 14](https://nextjs.org/) (pages router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) with Fraunces + Manrope via `next/font`
+- **Animation:** [Framer Motion](https://www.framer.com/motion/), [Lenis](https://lenis.darkroom.engineering/), Canvas
+- **Database:** [Supabase](https://supabase.com/) (`reservations`, `contact`, `events` tables)
 - **Deployment:** Vercel
 
 ---
 
-## 🧠 Project Goals
+## 📁 Structure
 
-- Practice building with **Next.js**
-- Learn **Supabase** integration for frontend/backend syncing
-- Design a clean and culturally themed restaurant UI
+```
+components/     Shared UI (Navbar, Footer, PageTransition, Embers, Decor…)
+components/home Home page sections
+data/           Menu, events and site info (edit content here)
+pages/          Routes: /, /menu, /events, /reservation, /contact
+public/images/  Photography
+utils/          Supabase client
+```
 
 ---
 
-## 🚀 Getting Started (Local Development)
-
-## Getting Started
-
-First, run the development server:
+## 🚀 Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The client reads `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (falling back to the original project). Expected tables:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Table          | Columns                                              |
+| -------------- | ---------------------------------------------------- |
+| `reservations` | `name`, `email`, `date`, `time`, `number_of_guest`   |
+| `contact`      | `name`, `email`, `message`                           |
+| `events`       | `date`, `time`, `description`, optional `title`      |

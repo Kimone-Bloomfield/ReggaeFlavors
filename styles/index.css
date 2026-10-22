@@ -1,282 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@font-face {
-  font-family: 'MyCustomCursiveFont';
-  src: url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap') format('woff2');
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    @apply bg-ink text-cream antialiased;
+    overflow-x: clip;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply font-sans bg-ink text-cream;
+  }
+
+  ::selection {
+    @apply bg-sun text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-sun ring-offset-2 ring-offset-ink;
+  }
+
+  /* Lenis smooth scroll */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(0.85) sepia(1) saturate(4) hue-rotate(5deg);
+    cursor: pointer;
+  }
 }
 
-body {
-  font-family: 'MyCustomCursiveFont', cursive;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-image: url('/bg2.jpg');
-  background-size: cover; 
-  color: white; 
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-eyebrow text-sun;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-current;
+  }
+
+  .h-display {
+    @apply font-display font-light leading-[0.95] tracking-tight;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide transition-[transform,background-color,color] duration-300 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-sun text-ink hover:bg-cream;
+  }
+  .btn-ghost {
+    @apply btn border border-cream/25 text-cream hover:border-cream hover:bg-cream hover:text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-cream/15 bg-ink-800/70 px-4 py-3.5 text-cream placeholder:text-cream/35 transition-colors focus:border-sun focus:outline-none focus:ring-0;
+  }
+  .label {
+    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-cream/60;
+  }
+
+  .chip {
+    @apply rounded-full border border-cream/15 px-4 py-2 text-sm transition-colors hover:border-cream/50;
+  }
+  .chip[aria-pressed='true'],
+  .chip[aria-checked='true'] {
+    @apply border-sun bg-sun font-semibold text-ink;
+  }
+
+  .tricolor {
+    background: linear-gradient(90deg, #1f8a4c 0 33.3%, #f6b91a 33.3% 66.6%, #0c0e0a 66.6%);
+  }
 }
 
-  .sliderimg
-{
-  object-fit: contain;
-  width: 25%;
-  height:10%;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-top: 4%;
+/* Film grain over everything for an analog, warm feel */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.8s steps(4) infinite;
 }
 
-.slider{
-  width: 100%;
-  height: 20%;
-  overflow: hidden;
-  animation-duration: infinte;
-  margin-top: 7%;
-}
-.slider .sliderimg{
-  animation: sideAnimation 5s linear infinite;
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
 }
 
-/*Menu.css*/
-.card-body
-{
-  background: linear-gradient(to left, green, rgb(194, 182, 17));
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
 }
 
-
-/* Events.css */
-
-.events-content {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5%;
-}
-
-.calendar-section {
-  flex: 1;
-  margin-right: 20px;
-  margin-left: 10px;
-}
-
-.event-details {
-  flex: 1;
-  margin-right: 10px;
-  color: white;
-}
-
-.event-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: linear-gradient(to right, green, black);
-  color: #ccc;
-}
-
-.past-events-gallary
-{
-    flex: 1;
-    margin-right: 10px;
-    color: white;
-
-}
-
-
-button:hover {
-  background-color: #0056b3;
-}
-
-
-.event-dot {
-  color: blue;
-  font-size: 18px;
-}
-
-/*contact */
-
-
-.header {
-  position: relative;
-}
-
-.contact-info {
-  flex: 1;
-  color: black;
- margin-top: 5%;
- align-content: center;
-}
-
-.message-form {
-  flex: 1;
-  color: black;
-}
-
-.social-media {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.social-media a {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-  text-decoration: none;
-  margin-right: 10px;
-}
-
-.contact-form {
-  max-width: 400px;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.input-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-.input-item {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.contact-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.contact-form input,
-.contact-form textarea {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-bottom: 1px solid #ccc;
-  outline: none;
-  padding: 0.5rem;
-  width: 100%;
-}
-
-.contact-form .message-input {
-  margin-top: 1rem;
-  font-weight: bold;
-}
-
-.contact-form button {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  background-color: #3bda13;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.contact-form button:hover {
-  background-color: #39b300;
-}
-
-/* Dialog styles */
-.MuiDialog-paper {
-  background-color: #fff; 
-}
-
-/* DialogContent styles */
-.MuiDialogContent-root {
-  padding: 20px; 
-}
-
-/* Success message styles */
-.success-message {
-  text-align: center; 
-  font-size: 18px; 
-  color: #333; 
-}
-
-/* Close button styles */
-.close-button {
-  margin-top: 20px; 
-  text-align: center; 
-}
-
-.close-button button {
-  background-color: #15b400; 
-  color: #fff; 
-  border: none; 
-  padding: 10px 20px; 
-  border-radius: 5px; 
-  cursor: pointer; 
-}
-
-.close-button button:hover {
-  background-color: #00c92b; 
-}
-
-
-.reservation-page {
-  display: flex;
-  flex-direction: column;
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;  
-  opacity: 1; 
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: 'hidden';
-}
-
-.reservation-container {
-  background-color: #f9f9f9; 
-  padding: 20px; 
-  border-radius: 10px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-  max-width: 400px; 
-  margin: 0 auto; 
-  overflow-y: auto; 
-  height: 400px; 
-  margin-top: 10%;
-}
-
-.reservation-form {
-  background-color: #fff; 
-  padding: 20px; 
-  border-radius: 10px; 
-  margin-top: 20px; 
-  
-}
-
-.reservation-form h2 {
-  text-align: center;
-}
-
-.reservation-form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.reservation-form label {
-  margin-bottom: 10px; 
-}
-
-.reservation-form input,
-.reservation-form button {
-  margin-bottom: 20px; 
-}
-
-.reservation-form button {
-  background-color: #007bff; 
-  color: #fff; 
-  border: none; 
-  padding: 10px 20px; 
-  border-radius: 5px; 
-  cursor: pointer; 
-}
-
-.reservation-form button:hover {
-  background-color: #0056b3; 
+@media (prefers-reduced-motion: reduce) {
+  .grain::after,
+  .animate-marquee,
+  .animate-spin-slow,
+  .animate-eq {
+    animation: none !important;
+  }
 }
